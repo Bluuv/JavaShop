@@ -1,20 +1,30 @@
 package com.shop.shop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.shop.entity.Account;
 import com.shop.shop.entity.MySession;
 import com.shop.shop.entity.Product;
 import com.shop.shop.repository.ProductRepository;
 import com.shop.shop.repository.UserRepository;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class AccountService{
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private MySession session;
+    @Autowired
     private ProductService productService;
+    @Autowired
     private ProductRepository productRepository;
 
     public AccountService (UserRepository userRepository, ProductService productService, ProductRepository productRepository){
@@ -36,10 +46,11 @@ public class AccountService{
         Optional<Account> opacc = userRepository.findByUsername(reqAccount.getUsername());
         Account dbAccount = opacc.orElse(null);
 
-        if (dbAccount != null && dbAccount.getHash().equals(reqAccount.getHash())){
-            session = new MySession();
+        if (dbAccount != null && dbAccount.getPassword().equals(reqAccount.getPassword())){
             session.setSessionAccount(dbAccount);
 
+        }else {
+            throw new RuntimeException("Invalid username or password.");
         }
         return session;
      }
@@ -72,17 +83,4 @@ public class AccountService{
         return false;
      }
 
-     @Transactional
-     public boolean buyCart(){
-        
-        double cartSum = session.getCart().stream().mapToDouble(p -> p.getPrice()).sum();
-        if (cartSum <= session.getSessionAccount().getMoney()){
-            session.getSessionAccount().setMoney(session.getSessionAccount().getMoney()-cartSum);
-            userRepository.save(session.getSessionAccount());
-
-            session.getCart().forEach(p -> productRepository.updateQuantity(p.getQuantity()-1, p.getId()));
-            return true;
-        }
-        return false;
-     }
 }

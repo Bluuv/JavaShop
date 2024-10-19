@@ -5,10 +5,16 @@ import org.springframework.stereotype.Component;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name="products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -17,6 +23,7 @@ public class Product {
     private double quantity;
     private double price;
     private String description;
+    private String photo;
 
     public void setId(int id){
         this.id = id;
@@ -62,6 +69,14 @@ public class Product {
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", description="
                 + description + "]";
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
     
 }

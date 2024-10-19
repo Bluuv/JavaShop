@@ -3,10 +3,22 @@ package com.shop.shop.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.web.context.annotation.SessionScope;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Component
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ApplicationScope
 public class MySession {
 
     private Account account;

@@ -1,5 +1,6 @@
 package com.shop.shop.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class ProductService {
     public Product findProductById(int id){
         Optional<Product> product = productRepository.findById(id);
         return product.orElse(null);
+    }
+
+    public List<Product> findAllProducts(){
+        return productRepository.findAll();
     }
 
     public boolean createProduct(Product product) {

@@ -71,7 +71,6 @@ public class ShopController {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/shop/register")
     public ResponseEntity<Account> registerAccount(@RequestBody Account account) {
          boolean dbresult = accountService.createAccount(account);
@@ -82,7 +81,6 @@ public class ShopController {
 
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/shop/login")
     public ResponseEntity<Account> loginAccount (@RequestBody Account account){
         accountService.login(account);
@@ -114,7 +112,6 @@ public class ShopController {
     }
 
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/addproducttocart")
     public ResponseEntity<Cart> addProductToCart
     (@RequestParam(name="product-id") int productId,
@@ -124,21 +121,18 @@ public class ShopController {
         return ResponseEntity.ok(updatedCart);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/incrementproduct")
     public ResponseEntity<Cart> incrementProductInCart(@RequestParam(name="product-id") int productId){
         Cart updatedCart = cartService.incrementProductInCart(productId);
         return ResponseEntity.ok(updatedCart);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/decrementproduct")
     public ResponseEntity<Cart> decrementProductInCart(@RequestParam(name="product-id") int productId){
         Cart updatedCart = cartService.decrementProductInCart(productId);
         return ResponseEntity.ok(updatedCart);
     }
 
-    @CrossOrigin(origins = "*")
     @PostMapping("/checkout")
     public ResponseEntity<String> checkout () {
         try{
@@ -149,7 +143,6 @@ public class ShopController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/removeproductfromcart")
     public ResponseEntity<Cart> removeProductFromCart(@RequestParam(name="product-id") int productId){
         try{
@@ -160,7 +153,6 @@ public class ShopController {
         }
     }
     
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/clearcart")
     public ResponseEntity<Cart> clearCart(){
         try{
@@ -172,7 +164,6 @@ public class ShopController {
     }
 
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/cart")
     public ResponseEntity<List<ProductInCartDTO>> getProductsInCart() {
         try {
